@@ -1,43 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+<html>
+    <body>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    </body>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById("root");
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+        function MinutesToHours() {
+            const [amount, setAmount] = React.useState(0);
+            const [flipped, setFlipped] = React.useState(false);
+
+            const onChange = (event) => {
+                setAmount(event.target.value);
+            };
+
+            const reset = () => {
+                setAmount(0);
+            };
+
+            const onFlip = () => {
+                reset();
+                setFlipped((current) => !current)
+            };
+
+            return (
+                <div>
+                    <div>
+                        <label htmlFor="minutes">minutes:</label>
+                        <input
+                            value={flipped ? amount * 60 : amount}
+                            id="minutes"
+                            placeholder="Minutes"
+                            type="number"
+                            onChange={onChange}
+                            disabled={flipped}
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="hours">hours:</label>
+                        <input
+                            value={flipped ? amount : Math.round(amount / 60)}
+                            id="hours"
+                            placeholder="Hours"
+                            type="number"
+                            onChange={onChange}
+                            disabled={!flipped}
+                        />
+                    </div>
+
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onFlip}>{flipped ? "Turn Back" : "Flip"}</button>
+                </div>
+            );
+        }
+
+        function KmToMiles() {
+            const [amount, setAmount] = React.useState(0);
+            const [flipped, setFlipped] = React.useState(false);
+
+            const onChange = (event) => {
+                setAmount(event.target.value);
+            };
+
+            const reset = () => {
+                setAmount(0);
+            };
+
+            const onFlip = () => {
+                reset();
+                setFlipped((current) => !current)
+            };
+
+            return (
+                <div>
+                    <div>
+                        <label htmlFor="km">km:</label>
+                        <input
+                            value={flipped ? amount * 1.609344 : amount}
+                            id="km"
+                            placeholder="km"
+                            type="number"
+                            onChange={onChange}
+                            disabled={flipped}
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="miles">miles:</label>
+                        <input
+                            value={flipped ? amount : amount / 1.609344}
+                            id="miles"
+                            placeholder="miles"
+                            type="number"
+                            onChange={onChange}
+                            disabled={!flipped}
+                        />
+                    </div>
+
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onFlip}>{flipped ? "Turn Back" : "Flip"}</button>
+                </div>
+            );
+        }
+
+        function App() {
+            const [index, setIndex] = React.useState("xx");
+            const onSelect = (event) => {
+                setIndex(event.target.value)
+            }
+
+            return (
+                <div>
+                    <h1>Super Converter</h1>
+                    <select onChange={onSelect} value={index}>
+                        <option value="xx">select your unit</option>
+                        <option value="0">Minutes & Hours</option>
+                        <option value="1">Km & Miles</option>
+                    </select>
+                    <hr/>
+                    {
+                        index === "xx" ?
+                            "Please Select Unit"
+                            :
+                            null
+                    }
+
+                    {
+                        index === "0" ?
+                            <MinutesToHours/>
+                            :
+                            null
+                    }
+
+                    {
+                        index === "1" ?
+                            <KmToMiles/>
+                            :
+                            null
+                    }
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, root);
+    </script>
 </html>
