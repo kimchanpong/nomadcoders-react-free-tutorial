@@ -1,20 +1,17 @@
+import Button from "./Button";
+import Button2 from "./Button2";
+import style from "./App.module.css"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <h1 className={style.title}>Welcome back!</h1>
+        <Button
+            text={"Continue"}
+        />
+        <Button2
+            text={"Continue2"}
+        />
     </div>
   );
 }
