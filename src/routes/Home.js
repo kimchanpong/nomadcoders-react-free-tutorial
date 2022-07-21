@@ -22,11 +22,12 @@ function Home() {
 
     return (
         <div>
-            {loading ? <h1>Loading</h1>: null}
+            {loading ? <h1>Loading..</h1>: null}
 
             {
                 movies.map((item, index) => (
                     <Movie
+                        key={item.id}
                         id={item.id}
                         medium_cover_image={item.medium_cover_image}
                         title={item.title}
